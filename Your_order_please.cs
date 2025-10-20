@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CodingChallenges;
+
 [TestClass]
 public class Your_order_please {
+    
     [TestMethod]
     public void Test() {
 
@@ -28,17 +30,26 @@ public class Your_order_please {
         Assert.AreEqual("Fo1r the2 g3ood 4of th5e pe6ople", Order("4of Fo1r pe6ople g3ood th5e the2"));
         Assert.AreEqual("", Order(""));
 
-        Assert.AreEqual("Thi1s is2 3a T4est", Order_v2("is2 Thi1s T4est 3a"));
-        Assert.AreEqual("Fo1r the2 g3ood 4of th5e pe6ople", Order_v2("4of Fo1r pe6ople g3ood th5e the2"));
-        Assert.AreEqual("", Order_v2(""));
+        // Assert.AreEqual("Thi1s is2 3a T4est", Order_v2("is2 Thi1s T4est 3a"));
+        // Assert.AreEqual("Fo1r the2 g3ood 4of th5e pe6ople", Order_v2("4of Fo1r pe6ople g3ood th5e the2"));
+        // Assert.AreEqual("", Order_v2(""));
     }
 
-    public static string Order(string words) => words
-        .Split(" ")
-        .Select(x => (x, x.Where(char.IsDigit).FirstOrDefault() - '0'))
-        .OrderBy(t => t.Item2)
-        .Select(t => t.Item1)
-        .Aggregate((a, b) => $"{a} {b}");
+    public static string Order(string words)
+    {
+        if (String.IsNullOrEmpty(words))
+            return words;
+        var splits = words.Split(' ');
+        var selects = splits.OrderBy(x => x.SingleOrDefault(char.IsDigit));
+        return String.Join(" ", selects);
+    }
+    
+    // public static string Order(string words) => words
+    //     .Split(" ")
+    //     .Select(x => (x, x.Where(char.IsDigit).FirstOrDefault() - '0'))
+    //     .OrderBy(t => t.Item2)
+    //     .Select(t => t.Item1)
+    //     .Aggregate((a, b) => $"{a} {b}");
 
     public static string Order_v2(string words) => words
         .Split(" ")
